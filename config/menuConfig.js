@@ -37,7 +37,7 @@ let menuConfig = [
         item: [
             {
                 text: "新增宿管",
-                url: "#"
+                url: "/dormadmin/addDormadmin"
             },
             {
                 text: "宿管列表",

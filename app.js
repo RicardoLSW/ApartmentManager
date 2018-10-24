@@ -9,7 +9,8 @@ const express = require("express"),
     path = require("path"),
     session = require("express-session");
 
-const adminRouter = require("./routes/adminRouter");
+const adminRouter = require("./routes/adminRouter"),
+    dormadminRouter = require("./routes/dormadminRouter");
 
 let app = express();
 let server = http.createServer(app);
@@ -30,6 +31,7 @@ app.set("view engine", "html");
 app.use("/public", express.static(path.join(__dirname, "./public")));
 
 app.use("/admin", adminRouter);
+app.use("/dormadmin", dormadminRouter);
 
 app.get("/", (req, resp) => {
     resp.redirect("/admin/login");

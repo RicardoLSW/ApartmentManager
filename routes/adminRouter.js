@@ -1,5 +1,5 @@
 /**
- * @name 用户登录验证 Admin_info数据表
+ * @name 用户登录验证 Admin_info数据表的路由
  * @author 骆顺旺
  * @version 1.0
  */
