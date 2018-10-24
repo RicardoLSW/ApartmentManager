@@ -2,16 +2,16 @@
 {{include "../header.html" obj}}
 <div class=" container">
     {{include "../pageHeader.html" obj}}
-    <form class=" form-horizontal col-sm-4 col-sm-offset-4">
+    <form class=" form-horizontal col-sm-4 col-sm-offset-4" method="POST" action="/admin/checkLogin" enctype="application/x-www-form-urlencoded">
         <div class=" form-group">
             <div class=" input-group">
                 <div class=" input-group-addon">
                     <span class=" glyphicon glyphicon-th-list"></span>
                 </div>
-                <select name="" id="" class=" form-control">
+                <select name="userType" id="" class=" form-control">
                     <option value="">--请选择用户类型--</option>
-                    <option value="管理员">管理员</option>
-                    <option value="宿管">宿管</option>
+                    <option value="超级管理员">超级管理员</option>
+                    <option value="宿舍管理员">宿舍管理员</option>
                     <option value="学生">学生</option>
                 </select>
             </div>
@@ -21,7 +21,7 @@
                 <div class=" input-group-addon">
                     <span class=" glyphicon glyphicon-user"></span>
                 </div>
-                <input type="text" class=" form-control">
+                <input type="text" class=" form-control" data-tip="账号" name="userName">
             </div>
         </div>
         <div class=" form-group">
@@ -29,12 +29,36 @@
                 <div class=" input-group-addon">
                     <span class=" glyphicon glyphicon-lock"></span>
                 </div>
-                <input type="text" class=" form-control">
+                <input type="text" class=" form-control" data-tip="密码" name="userPwd">
             </div>
         </div>
         <div class=" form-group">
-            <button type="submit" class=" btn btn-primary btn-block">登陆</button>
+            <button type="submit" class=" btn btn-primary btn-block btn-submit-login">登陆</button>
         </div>
     </form>
 </div>
+<style type="text/css">
+    body {
+        background-image: url("../../public/images/loginbg.jpg");
+        background-size: 100% 100%;
+        background-attachment: fixed;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: fixed;
+        top: 0px;
+        left: 0px;
+        right: 0px;
+        bottom: 0px;
+    }
+
+    .page-header {
+        border-bottom: none;
+    }
+</style>
+<script>
+    $(function () {
+        $(".form-control").inputTips();
+    })
+</script>
 {{include "../footer.html"}}
