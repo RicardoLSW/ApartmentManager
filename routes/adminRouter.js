@@ -8,6 +8,7 @@ const router = require("express").Router();
 const body = require("body-parser");
 const MessageBox = require("../utils/MessageBox");
 const Admin_infoService = require("../services/Admin_infoService");
+const menuConfig = require("../config/menuConfig");
 
 router.use(body.json());
 router.use(body.urlencoded({ extended: false }));
@@ -33,7 +34,7 @@ router.post("/checkLogin", async (req, resp) => {
 
 router.get("/adminIndex", (req, resp) => {
     let userInfo = req.session.userInfo;
-    resp.render("admin/adminIndex", { userInfo });
+    resp.render("admin/adminIndex", { userInfo, menuConfig });
 })
 
 module.exports = router;

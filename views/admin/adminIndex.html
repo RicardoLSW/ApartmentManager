@@ -1,4 +1,53 @@
 <% var obj = {pageTitle:"公寓管理系统",userInfo} %>
 {{include "../header.html" obj}}
-{{include "./nav.html" obj}}
+{{include "../nav.html" obj}}
+<div class=" center">
+    <div class=" left col-sm-2 hidden-xs">
+        <% var obj = {menuConfig} %>
+        {{include "../leftMenu.html" obj}}
+    </div>
+    <div class=" right col-sm-10 col-xs-12 col-sm-offset-2">
+        <iframe src="" name="iframe1" id="iframe1" frameborder="0"></iframe>
+    </div>
+</div>
+<style type="text/css">
+    .center {
+        position: fixed;
+        width: 100%;
+        top: 51px;
+        bottom: 0;
+    }
+
+    .center>.left {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        border-right: 1px solid lightgray;
+        padding: 0;
+    }
+
+    .center>.right {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+    }
+
+    .center>.right>iframe {
+        width: 100%;
+        height: 100%;
+    }
+
+    .center>.left .panel-heading>p {
+        margin-bottom: 0;
+    }
+
+    .center>.left .panel-body {
+        padding: 0px;
+    }
+
+    .center>.left .list-group {
+        margin-bottom: 0px;
+    }
+</style>
 {{include "../footer.html"}}
