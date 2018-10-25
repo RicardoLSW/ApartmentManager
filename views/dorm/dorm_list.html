@@ -53,12 +53,107 @@
                 <td>{{item.d_num}}</td>
                 <td>{{item.da_id}}</td>
                 <td>
-                    <label for="" class=" label btn-warning">编辑</label>
-                    <label for="" class=" label btn-danger">删除</label>
+                    <label for="" id="edit" class=" label btn-warning" data-toggle="modal" data-target="#modal1">编辑</label>
+                    <label for="" id="delete" class=" label btn-danger">删除</label>
                 </td>
             </tr>
             {{/each}}
         </table>
     </div>
 </div>
+<div class=" modal fade" id="modal1">
+    <div class=" modal-dialog">
+        <div class=" modal-content">
+            <div class=" modal-header">
+                <span class=" close" data-dismiss="modal">&times;</span>
+                <h2 class=" text-center text-primary">编辑</h2>
+            </div>
+            <form method="POST" action="/dormadmin/upDormadmin" class=" form-horizontal" enctype="application/x-www-form-urlencoded">
+                <div class=" modal-body">
+                    {{each dorm_info item index}}
+                    <% var obj = {item} %>
+                    {{if item[1]=="宿管编号"}}
+                    <div class=" form-group">
+                        <label for="" class=" col-sm-2 control-label">{{item[1]}}</label>
+                        <div class=" col-sm-7">
+                            <select name="{{item[0]}}" class=" form-control">
+                                {{each result item index}}
+                                <option value="{{item.da_id}}">{{item.da_id}}</option>
+                                {{/each}}
+                            </select>
+                        </div>
+                    </div>
+                    {{else if item[1]=="类型"}}
+                    <div class=" form-group">
+                        <label for="" class=" col-sm-2 control-label">{{item[1]}}</label>
+                        <div class=" col-sm-7">
+                            <select name="{{item[0]}}" class=" form-control">
+                                <option value="男生宿舍">男生宿舍</option>
+                                <option value="女生宿舍">女生宿舍</option>
+                            </select>
+                        </div>
+                    </div>
+                    {{else if item[1]=="人数"}}
+                    <div class=" form-group">
+                        <label for="" class=" col-sm-2 control-label">{{item[1]}}</label>
+                        <div class=" col-sm-7">
+                            <select name="{{item[0]}}" class=" form-control">
+                                <option value="4">4人</option>
+                                <option value="5">5人</option>
+                            </select>
+                        </div>
+                    </div>
+                    {{else}}
+                    {{include "../bs_views/form_group_input.html" obj}}
+                    {{/if}}
+                    {{/each}}
+                </div>
+                <div class=" modal-footer">
+                    <div class=" form-group">
+                        <div class=" col-sm-7 col-sm-offset-3">
+                            <button type="submit" class=" btn btn-primary btn-submit-loading">保存</button>
+                            <button type="reset" class=" btn btn-warning" data-dismiss="modal">关闭</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<script>
+    $(function () {
+        $(".table").on("click", "label", function (event) {
+            event = window.event || event;
+            if (event.target.id == 'edit') {
+                var arr = [];
+                $(event.target.parentElement).prevAll().not(":last").each(function (index, element) {
+                    // element == this
+                    arr.unshift($(this).text());
+                });
+                $("#modal1 .form-control").each(function (index, element) {
+                    // element == this
+                    $(this).val(arr[index]);
+                });
+            }
+            // if (event.target.id == "delete") {
+            //     let da_id = $(this).data("da_id");
+            //     if (confirm("确认操作！")) {
+            //         $.get("/dormadmin/delDormadmin?da_id=" + da_id,
+            //             function (data, textStatus, jqXHR) {
+            //                 if (data.status == "success") {
+            //                     alert(data.msg);
+            //                     location.reload();
+            //                 }
+            //                 else {
+            //                     alert(data.msg);
+            //                 }
+            //             }
+            //         );
+            //     }
+            // }
+        });
+        $(".form-control").inputTips();
+        $("#modal1 input:first").prop("readonly", true);
+    })
+</script>
 {{include "../footer.html"}}

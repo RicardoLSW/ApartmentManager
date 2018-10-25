@@ -22,8 +22,9 @@ router.get("/addDorm", async (req, resp) => {
 
 router.get("/dorm_list", async (req, resp) => {
     try {
+        let dorm_info = Object.entries(new Dorm_info());
         let result = await new Dorm_infoService().dorm_list();
-        resp.render("dorm/dorm_list", { result });
+        resp.render("dorm/dorm_list", { result, dorm_info });
     } catch (error) {
         MessageBox.showAndBack("服务器错误!", resp);
     }
@@ -33,7 +34,7 @@ router.post("/doAddDorm", async (req, resp) => {
     try {
         let flag = await new Dorm_infoService().doAddDorm(req.body);
         if (flag) {
-            MessageBox.showAndRedirect("添加成功!", "", resp);
+            MessageBox.showAndRedirect("添加成功!", "dorm_list", resp);
         }
         else {
             MessageBox.showAndBack("添加失败!", resp);
