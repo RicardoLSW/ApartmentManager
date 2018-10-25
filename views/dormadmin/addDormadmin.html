@@ -2,8 +2,26 @@
 {{include "../header.html" obj}}
 <div class=" container">
     {{include "../pageHeader.html" obj}}
-    <form action="" class=" form-horizontal">
-        
+    <form action="/dormadmin/doAddDormadmin" method="POST" enctype="application/x-www-form-urlencoded" class=" form-horizontal">
+        {{each dormadin_info item index}}
+        <% var obj = {item} %>
+        {{if item[1]=="性别"}}
+        {{include "../bs_views/form_group_select.html" obj}}
+        {{else}}
+        {{include "../bs_views/form_group_input.html" obj}}
+        {{/if}}
+        {{/each}}
+        <div class=" form-group">
+            <div class=" col-sm-7 col-sm-offset-2">
+                <button type="submit" class=" btn btn-primary">保存</button>
+                <a href="#" type="reset" class=" btn btn-warning">返回</a>
+            </div>
+        </div>
     </form>
 </div>
+<script>
+    $(function () {
+        $(".form-control").inputTips();
+    })
+</script>
 {{include "../footer.html"}}

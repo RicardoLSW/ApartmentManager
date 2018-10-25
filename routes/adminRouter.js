@@ -17,6 +17,11 @@ router.get("/login", (req, resp) => {
     resp.render("admin/login");
 })
 
+router.get("/logOff", (req, resp) => {
+    req.session.userInfo = undefined;
+    resp.redirect("admin/login");
+})
+
 router.post("/checkLogin", async (req, resp) => {
     try {
         let userType = req.body.userType;

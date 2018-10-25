@@ -30,9 +30,24 @@ app.set("view engine", "html");
 //设置景静态路径
 app.use("/public", express.static(path.join(__dirname, "./public")));
 
+app.use((req, resp, next) => {
+    if (req.session.userInfo != undefined) {
+        next();
+    }
+    else {
+        if (req.path == "/admin/login" || req.path == "/admin/checkLogin") {
+            next();
+        }
+        else {
+            resp.redirect("/admin/login");
+        }
+    }
+})
+
 app.use("/admin", adminRouter);
 app.use("/dormadmin", dormadminRouter);
 
+//登录页
 app.get("/", (req, resp) => {
     resp.redirect("/admin/login");
 })

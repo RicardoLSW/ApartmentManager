@@ -41,7 +41,7 @@ let menuConfig = [
             },
             {
                 text: "宿管列表",
-                url: "#"
+                url: "/dormadmin/dormadmin_list"
             }
         ]
     }

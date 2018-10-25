@@ -6,19 +6,6 @@
         <div class=" form-group">
             <div class=" input-group">
                 <div class=" input-group-addon">
-                    <span class=" glyphicon glyphicon-th-list"></span>
-                </div>
-                <select name="userType" id="" class=" form-control">
-                    <option value="">--请选择用户类型--</option>
-                    <option value="超级管理员">超级管理员</option>
-                    <option value="宿舍管理员">宿舍管理员</option>
-                    <option value="学生">学生</option>
-                </select>
-            </div>
-        </div>
-        <div class=" form-group">
-            <div class=" input-group">
-                <div class=" input-group-addon">
                     <span class=" glyphicon glyphicon-user"></span>
                 </div>
                 <input type="text" class=" form-control" data-tip="账号" name="userName">
@@ -33,7 +20,20 @@
             </div>
         </div>
         <div class=" form-group">
-            <button type="submit" class=" btn btn-primary btn-block btn-submit-login">登陆</button>
+            <div class=" input-group">
+                <div class=" input-group-addon">
+                    <span class=" glyphicon glyphicon-th-list"></span>
+                </div>
+                <select name="userType" id="" class=" form-control">
+                    <option value="">--请选择用户类型--</option>
+                    <option value="超级管理员">超级管理员</option>
+                    <option value="宿舍管理员">宿舍管理员</option>
+                    <option value="学生">学生</option>
+                </select>
+            </div>
+        </div>
+        <div class=" form-group">
+            <button type="submit" class=" btn btn-primary btn-block btn-submit-loading">登陆</button>
         </div>
     </form>
 </div>
