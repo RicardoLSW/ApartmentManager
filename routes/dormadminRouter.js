@@ -25,7 +25,7 @@ router.post("/doAddDormadmin", async (req, resp) => {
     try {
         let flag = await new Dormadmin_infoService().doAddDormadmin(req.body);
         if (flag) {
-            MessageBox.showAndRedirect("添加成功!", "www.baidu.com", resp);
+            MessageBox.showAndRedirect("添加成功!", "dormadmin_list", resp);
         }
         else {
             MessageBox.showAndBack("添加失败!", resp);
@@ -62,6 +62,30 @@ router.get("/delDormadmin", async (req, resp) => {
         let pageJson = new PageJson("error", "服务器错误!");
         resp.json(pageJson);
     }
+})
+
+//批量删除
+router.get("/delAllDormadmin", async (req, resp) => {
+    try {
+        let da_idArr = req.query.da_idArr.split("-");
+        console.log(da_idArr);
+        let flag = await new Dormadmin_infoService().delAllDormadmin(da_idArr);
+        if (flag) {
+            let pageJson = new PageJson("success", "批量删除成功!");
+            resp.json(pageJson);
+        }
+        else {
+            let pageJson = new PageJson("error", "批量删除失败!");
+            resp.json(pageJson);
+        }
+    } catch (error) {
+        let pageJson = new PageJson("error", "服务器错误!");
+        resp.json(pageJson);
+    }
+})
+
+router.get("/queryList", async (req, resp) => {
+
 })
 
 module.exports = router;

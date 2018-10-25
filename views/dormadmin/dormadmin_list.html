@@ -8,7 +8,7 @@
             批量删除
         </button>
     </div>
-    <form action="" method="GET" class=" form-inline" style="margin:5px 0px;">
+    <form action="/dormadmin/queryList" method="GET" class=" form-inline" style="margin:5px 0px;">
         <div class=" form-group">
             <label for="" class=" control-label">编号</label>
             <span><input type="text" class=" form-control" name="s_id"></span>
@@ -26,7 +26,7 @@
             </select>
         </div>
         <div class=" form-group">
-            <button type="submit" class=" btn btn-primary">查询</button>
+            <button type="submit" class=" btn btn-primary btn-submit-loading">查询</button>
         </div>
     </form>
     <div class=" table-responsive">
@@ -124,6 +124,29 @@
             }
         });
         $(".form-control").inputTips();
+        $("#delAll").click(function (e) {
+            if ($("[name='ck']:checked").length > 0) {
+                if (confirm("你确定要删除所有选中项吗！")) {
+                    let da_idArr = [];
+                    $("[name='ck']:checked").each(function (index, element) {
+                        // element == this
+                        da_idArr.push($(this).val());
+                    });
+                    console.log(da_idArr);
+                    $.get("/dormadmin/delAllDormadmin?da_idArr=" + da_idArr.join("-"),
+                        function (data, textStatus, jqXHR) {
+                            if (data.status == "success") {
+                                alert(data.msg);
+                                location.reload();
+                            }
+                            else {
+                                alert(data.msg);
+                            }
+                        }
+                    );
+                }
+            }
+        });
     })
 </script>
 {{include "../footer.html"}}

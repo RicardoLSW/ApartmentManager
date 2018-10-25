@@ -69,6 +69,22 @@ class Dormadmin_infoService extends BaseService {
             })
         })
     }
+    delAllDormadmin(da_idArr) {
+        return new Promise((resolve, reject) => {
+            let conn = super.getConn();
+            let delStr = `UPDATE ${this.tableName} SET isDel=1 WHERE da_id IN (${new Array(da_idArr.length).fill("?").toString()})`;
+            conn.query(delStr, da_idArr, (err, result) => {
+                if (err) {
+                    reject(err);
+                }
+                else {
+                    let flag = result.affectedRows > 0 ? true : false;
+                    resolve(flag)
+                }
+                conn.end();
+            })
+        })
+    }
 }
 
 module.exports = Dormadmin_infoService;
