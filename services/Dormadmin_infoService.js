@@ -90,6 +90,10 @@ class Dormadmin_infoService extends BaseService {
             })
         })
     }
+    /**
+     * @name 查询功能
+     * @param {*} param0 查询信息
+     */
     queryList({ da_id, da_name, da_sex }) {
         return new Promise((resolve, reject) => {
             let conn = super.getConn();

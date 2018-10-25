@@ -1,0 +1,59 @@
+<% var obj = {pageTitle:"新增宿舍"} %>
+{{include "../header.html" obj}}
+<div class=" container">
+    {{include "../pageHeader.html" obj}}
+    <form action="/dorm/doAddDorm" method="POST" enctype="application/x-www-form-urlencoded" class=" form-horizontal">
+        {{each dorm_info item index}}
+        <% var obj = {item} %>
+        {{if item[1]=="宿管编号"}}
+        <div class=" form-group">
+            <label for="" class=" col-sm-2 control-label">{{item[1]}}</label>
+            <div class=" col-sm-7">
+                <select name="{{item[0]}}" class=" form-control">
+                    <option value="">--请选择宿管编号--</option>
+                    {{each result item index}}
+                    <option value="{{item.da_id}}">{{item.da_id}}</option>
+                    {{/each}}
+                </select>
+            </div>
+        </div>
+        {{else if item[1]=="类型"}}
+        <div class=" form-group">
+            <label for="" class=" col-sm-2 control-label">{{item[1]}}</label>
+            <div class=" col-sm-7">
+                <select name="{{item[0]}}" class=" form-control">
+                    <option value="">--请选择宿舍类型--</option>
+                    <option value="男生宿舍">男生宿舍</option>
+                    <option value="女生宿舍">女生宿舍</option>
+                </select>
+            </div>
+        </div>
+        {{else if item[1]=="人数"}}
+        <div class=" form-group">
+            <label for="" class=" col-sm-2 control-label">{{item[1]}}</label>
+            <div class=" col-sm-7">
+                <select name="{{item[0]}}" class=" form-control">
+                    <option value="">--请选择宿舍人数--</option>
+                    <option value="4">4人</option>
+                    <option value="5">5人</option>
+                </select>
+            </div>
+        </div>
+        {{else}}
+        {{include "../bs_views/form_group_input.html" obj}}
+        {{/if}}
+        {{/each}}
+        <div class=" form-group">
+            <div class=" col-sm-7 col-sm-offset-2">
+                <button type="submit" class=" btn btn-primary">保存</button>
+                <button type="reset" class=" btn btn-warning">重置</button>
+            </div>
+        </div>
+    </form>
+</div>
+<script>
+    $(function () {
+        $(".form-control").inputTips();
+    })
+</script>
+{{include "../footer.html"}}

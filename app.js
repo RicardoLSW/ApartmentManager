@@ -10,7 +10,8 @@ const express = require("express"),
     session = require("express-session");
 
 const adminRouter = require("./routes/adminRouter"),
-    dormadminRouter = require("./routes/dormadminRouter");
+    dormadminRouter = require("./routes/dormadminRouter"),
+    dormRouter = require("./routes/dormRouter");
 
 let app = express();
 let server = http.createServer(app);
@@ -46,6 +47,7 @@ app.use((req, resp, next) => {
 
 app.use("/admin", adminRouter);
 app.use("/dormadmin", dormadminRouter);
+app.use("/dorm", dormRouter);
 
 //登录页
 app.get("/", (req, resp) => {

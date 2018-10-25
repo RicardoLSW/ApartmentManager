@@ -8,7 +8,7 @@ const router = require("express").Router(),
     body = require("body-parser"),
     MessageBox = require("../utils/MessageBox"),
     Dormadmin_infoService = require("../services/Dormadmin_infoService"),
-    Dormadmin_info = require("../model/dormadmin_info"),
+    Dormadmin_info = require("../model/Dormadmin_info"),
     PageJson = require("../model/PageJson");
 
 router.use(body.json());

@@ -19,11 +19,11 @@ let menuConfig = [
         item: [
             {
                 text: "新增宿舍",
-                url: "#"
+                url: "/dorm/addDorm"
             },
             {
                 text: "宿舍列表",
-                url: "#"
+                url: "/dorm/dorm_list"
             },
             {
                 text: "楼栋列表",
