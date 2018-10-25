@@ -4,7 +4,8 @@
  * @version 1.0
  */
 
-const BaseService = require("./BaseService");
+const BaseService = require("./BaseService"),
+    ObjectHelper = require("../utils/ObjectHelper");
 
 class Dormadmin_infoService extends BaseService {
     constructor() {
@@ -69,6 +70,10 @@ class Dormadmin_infoService extends BaseService {
             })
         })
     }
+    /**
+     * @name 批量删除宿管信息
+     * @param {*} da_idArr 选中的宿管编号数组
+     */
     delAllDormadmin(da_idArr) {
         return new Promise((resolve, reject) => {
             let conn = super.getConn();
@@ -80,6 +85,53 @@ class Dormadmin_infoService extends BaseService {
                 else {
                     let flag = result.affectedRows > 0 ? true : false;
                     resolve(flag)
+                }
+                conn.end();
+            })
+        })
+    }
+    queryList({ da_id, da_name, da_sex }) {
+        return new Promise((resolve, reject) => {
+            let conn = super.getConn();
+            let selectStr = `SELECT * FROM ${this.tableName} WHERE isDel=0`;
+            let str = "";
+            if (!ObjectHelper.isNullAndUndefined(da_id)) {
+                str += ` AND da_id LIKE "%${da_id}%"`;
+            }
+            if (!ObjectHelper.isNullAndUndefined(da_name)) {
+                str += ` AND da_name LIKE "%${da_name}%"`;
+            }
+            if (!ObjectHelper.isNullAndUndefined(da_sex)) {
+                str += ` AND da_sex="${da_sex}"`;
+            }
+            selectStr += str;
+            conn.query(selectStr, [], (err, result) => {
+                if (err) {
+                    reject(err);
+                }
+                else {
+                    resolve(result);
+                }
+                conn.end();
+            })
+        })
+    }
+    /**
+     * @name 修改宿管信息
+     * @param {Object} model 宿管信息对象
+     */
+    upDormadmin(model) {
+        return new Promise((resolve, reject) => {
+            let conn = super.getConn();
+            let values = Object.values(model);
+            let updateStr = super.createUpdateSql(model);
+            conn.query(updateStr, values.slice(1).concat(values.slice(0, 1)), (err, result) => {
+                if (err) {
+                    reject(err);
+                }
+                else {
+                    let flag = result.affectedRows == 1 ? true : false;
+                    resolve(flag);
                 }
                 conn.end();
             })

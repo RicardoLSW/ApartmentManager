@@ -84,8 +84,28 @@ router.get("/delAllDormadmin", async (req, resp) => {
     }
 })
 
+//查询
 router.get("/queryList", async (req, resp) => {
+    try {
+        let result = await new Dormadmin_infoService().queryList(req.query);
+        resp.render("dormadmin/dormadmin_list", { result });
+    } catch (error) {
+        MessageBox.showAndBack("服务器错误!" + error, resp);
+    }
+})
 
+router.post("/upDormadmin", async (req, resp) => {
+    try {
+        let flag = await new Dormadmin_infoService().upDormadmin(req.body);
+        if (flag) {
+            MessageBox.showAndRedirect("修改成功!", "dormadmin_list", resp);
+        }
+        else {
+            MessageBox.showAndBack("修改失败!", resp);
+        }
+    } catch (error) {
+        MessageBox.showAndBack("服务器错误!", resp);
+    }
 })
 
 module.exports = router;

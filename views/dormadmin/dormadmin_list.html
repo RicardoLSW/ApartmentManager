@@ -11,15 +11,15 @@
     <form action="/dormadmin/queryList" method="GET" class=" form-inline" style="margin:5px 0px;">
         <div class=" form-group">
             <label for="" class=" control-label">编号</label>
-            <span><input type="text" class=" form-control" name="s_id"></span>
+            <span><input type="text" class=" form-control" name="da_id"></span>
         </div>
         <div class=" form-group">
             <label for="" class=" control-label">姓名</label>
-            <span><input type="text" class=" form-control" name="s_name"></span>
+            <span><input type="text" class=" form-control" name="da_name"></span>
         </div>
         <div class=" form-group">
             <label for="" class=" control-label">性别</label>
-            <select name="s_sex" id="" class=" form-control">
+            <select name="da_sex" id="" class=" form-control">
                 <option value="">--请选择--</option>
                 <option value="男">男</option>
                 <option value="女">女</option>
@@ -68,7 +68,7 @@
                 <span class=" close" data-dismiss="modal">&times;</span>
                 <h2 class=" text-center text-primary">编辑</h2>
             </div>
-            <form method="POST" action="/stu_h1802/upStudentInfo" class=" form-horizontal" enctype="application/x-www-form-urlencoded">
+            <form method="POST" action="/dormadmin/upDormadmin" class=" form-horizontal" enctype="application/x-www-form-urlencoded">
                 <div class=" modal-body">
                     {{each dormadin_info item index}}
                     <% var obj = {item} %>
@@ -147,6 +147,7 @@
                 }
             }
         });
+        $("#modal1 input:first").prop("readonly", true);
     })
 </script>
 {{include "../footer.html"}}
