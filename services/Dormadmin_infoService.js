@@ -8,7 +8,7 @@ const BaseService = require("./BaseService");
 
 class Dormadmin_infoService extends BaseService {
     constructor() {
-        super("dormadmin_Info");
+        super("dormadmin_info");
     }
     /**
      * @name 新增宿管
