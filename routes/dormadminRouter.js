@@ -59,8 +59,7 @@ router.get("/delDormadmin", async (req, resp) => {
             resp.json(pageJson);
         }
     } catch (error) {
-        let pageJson = new PageJson("error", "服务器错误!");
-        resp.json(pageJson);
+        MessageBox.showAndBack("服务器错误!", resp);
     }
 })
 
@@ -79,8 +78,7 @@ router.get("/delAllDormadmin", async (req, resp) => {
             resp.json(pageJson);
         }
     } catch (error) {
-        let pageJson = new PageJson("error", "服务器错误!");
-        resp.json(pageJson);
+        MessageBox.showAndBack("服务器错误!", resp);
     }
 })
 

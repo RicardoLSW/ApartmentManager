@@ -8,7 +8,7 @@
             批量删除
         </button>
     </div>
-    <form action="" method="GET" class=" form-inline" style="margin:5px 0px;">
+    <form action="/dorm/queryDormList" method="GET" class=" form-inline" style="margin:5px 0px;">
         <div class=" form-group">
             <label for="" class=" control-label">编号</label>
             <span><input type="text" class=" form-control" name="d_id"></span>
@@ -54,7 +54,7 @@
                 <td>{{item.da_id}}</td>
                 <td>
                     <label for="" id="edit" class=" label btn-warning" data-toggle="modal" data-target="#modal1">编辑</label>
-                    <label for="" id="delete" class=" label btn-danger">删除</label>
+                    <label for="" id="delete" class=" label btn-danger" data-d_id="{{item.d_id}}">删除</label>
                 </td>
             </tr>
             {{/each}}
@@ -68,7 +68,7 @@
                 <span class=" close" data-dismiss="modal">&times;</span>
                 <h2 class=" text-center text-primary">编辑</h2>
             </div>
-            <form method="POST" action="/dormadmin/upDormadmin" class=" form-horizontal" enctype="application/x-www-form-urlencoded">
+            <form method="POST" action="/dorm/upDorm" class=" form-horizontal" enctype="application/x-www-form-urlencoded">
                 <div class=" modal-body">
                     {{each dorm_info item index}}
                     <% var obj = {item} %>
@@ -77,7 +77,7 @@
                         <label for="" class=" col-sm-2 control-label">{{item[1]}}</label>
                         <div class=" col-sm-7">
                             <select name="{{item[0]}}" class=" form-control">
-                                {{each result item index}}
+                                {{each da_id item index}}
                                 <option value="{{item.da_id}}">{{item.da_id}}</option>
                                 {{/each}}
                             </select>
@@ -122,6 +122,8 @@
 </div>
 <script>
     $(function () {
+        $(".form-control").inputTips();
+        $("#modal1 input:first").prop("readonly", true);
         $(".table").on("click", "label", function (event) {
             event = window.event || event;
             if (event.target.id == 'edit') {
@@ -135,25 +137,45 @@
                     $(this).val(arr[index]);
                 });
             }
-            // if (event.target.id == "delete") {
-            //     let da_id = $(this).data("da_id");
-            //     if (confirm("确认操作！")) {
-            //         $.get("/dormadmin/delDormadmin?da_id=" + da_id,
-            //             function (data, textStatus, jqXHR) {
-            //                 if (data.status == "success") {
-            //                     alert(data.msg);
-            //                     location.reload();
-            //                 }
-            //                 else {
-            //                     alert(data.msg);
-            //                 }
-            //             }
-            //         );
-            //     }
-            // }
+            if (event.target.id == "delete") {
+                let d_id = $(this).data("d_id");
+                if (confirm("确认操作！")) {
+                    $.get("/dorm/delDorm?d_id=" + d_id,
+                        function (data, textStatus, jqXHR) {
+                            if (data.status == "success") {
+                                alert(data.msg);
+                                location.reload();
+                            }
+                            else {
+                                alert(data.msg);
+                            }
+                        }
+                    );
+                }
+            }
         });
-        $(".form-control").inputTips();
-        $("#modal1 input:first").prop("readonly", true);
+        $("#delAll").click(function (e) {
+            if ($("[name='ck']:checked").length > 0) {
+                if (confirm("你确定要删除所有选中项吗！")) {
+                    let d_idArr = [];
+                    $("[name='ck']:checked").each(function (index, element) {
+                        // element == this
+                        d_idArr.push($(this).val());
+                    });
+                    $.get("/dorm/delAllDorm?d_idArr=" + d_idArr.join("-"),
+                        function (data, textStatus, jqXHR) {
+                            if (data.status == "success") {
+                                alert(data.msg);
+                                location.reload();
+                            }
+                            else {
+                                alert(data.msg);
+                            }
+                        }
+                    );
+                }
+            }
+        });
     })
 </script>
 {{include "../footer.html"}}
