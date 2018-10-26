@@ -1,0 +1,61 @@
+<% var obj = {pageTitle:"新增学生"} %>
+{{include "../header.html" obj}}
+<div class=" container">
+    {{include "../pageHeader.html" obj}}
+    <form action="/student/doAddStudent" method="POST" enctype="multipart/form-data" class=" form-horizontal">
+        {{each student_info item index}}
+        <% var obj = {item} %>
+        {{if item[1]=="性别"}}
+        {{include "../bs_views/form_group_select.html" obj}}
+        {{else if item[1]=="宿舍"}}
+        <div class=" form-group">
+            <label for="" class=" col-sm-2 control-label">{{item[1]}}</label>
+            <div class=" col-sm-7">
+                <select name="{{item[0]}}" class=" form-control">
+                    <option value="">--请选择宿舍--</option>
+                    {{each dorm_info item index}}
+                    <option value="{{item.d_id}}">{{item.d_id}}--{{item.d_type}}</option>
+                    {{/each}}
+                </select>
+            </div>
+        </div>
+        {{else if item[1]=="照片"}}
+        {{include "../bs_views/form_group_upimage.html" obj}}
+        {{else}}
+        {{include "../bs_views/form_group_input.html" obj}}
+        {{/if}}
+        {{/each}}
+        <div class=" form-group">
+            <div class=" col-sm-7 col-sm-offset-2">
+                <button type="submit" class=" btn btn-primary">保存</button>
+                <button type="reset" class=" btn btn-warning">重置</button>
+            </div>
+        </div>
+    </form>
+</div>
+<script>
+    $(function () {
+        $(".form-control").inputTips();
+        $("#btnChooseFile").click(function () {
+            $("#s_photo").click();
+        });
+        $("#s_photo").change(function () {
+            var reg = /^(image)\/(jpg|jpeg|bmp|gif|png|svg|ttf)$/;
+            var file = this.files[0];
+            if (reg.test(file.type)) {
+                //说明是图片
+                var fileReader = new FileReader();
+                fileReader.onload = function (event) {
+                    var base64 = event.target.result;
+                    $("#btnChooseFile").attr("src", base64);
+                }
+                fileReader.readAsDataURL(file);
+            }
+            else {
+                alert("请选择图片");
+                $(this).val("");
+            }
+        })
+    })
+</script>
+{{include "../footer.html"}}

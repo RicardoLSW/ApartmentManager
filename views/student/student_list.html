@@ -1,0 +1,111 @@
+<% var obj = {pageTitle:"学生列表"} %>
+{{include "../header.html" obj}}
+<div class=" container">
+    {{include "../pageHeader.html" obj}}
+    <div class=" btn-group pull-right" style="margin-bottom:5px;">
+        <button type="button" class=" btn btn-danger" id="delAll">
+            <span class=" glyphicon glyphicon-trash"></span>
+            批量删除
+        </button>
+    </div>
+    <form action="" method="GET" class=" form-inline" style="margin:5px 0px;">
+        <div class=" form-group">
+            <label for="" class=" control-label">学号：</label>
+            <input type="text" class=" form-control" name="s_id">
+        </div>
+        <div class=" form-group">
+            <label for="" class=" control-label">姓名：</label>
+            <input type="text" class=" form-control" name="s_name">
+        </div>
+        <div class=" form-group">
+            <label for="" class=" control-label">性别：</label>
+            <select name="s_sex" id="" class=" form-control">
+                <option value="">--请选择--</option>
+                <option value="男">男</option>
+                <option value="女">女</option>
+            </select>
+        </div>
+        <div class=" form-group">
+            <button type="submit" class=" btn btn-primary">查询</button>
+        </div>
+    </form>
+    <div class=" table-responsive">
+        <table class=" table table-hover table-striped table-bordered">
+            <tr>
+                <td>
+                    <label for="#ckAll">
+                        <input type="checkbox" id="ckAll" class="ckAll">全选
+                    </label>
+                </td>
+                <td>学号</td>
+                <td>姓名</td>
+                <td>性别</td>
+                <td>年龄</td>
+                <td>电话</td>
+                <td>班级</td>
+                <td>宿舍</td>
+                <td>照片</td>
+                <td>操作</td>
+            </tr>
+            {{each result item index}}
+            <tr>
+                <td>
+                    <input type="checkbox" name="ck" value="{{item.s_id}}">
+                </td>
+                <td>{{item.s_id}}</td>
+                <td>{{item.s_name}}</td>
+                <td>{{item.s_sex}}</td>
+                <td>{{item.s_age}}</td>
+                <td>{{item.s_tel}}</td>
+                <td>{{item.c_id}}</td>
+                <td>{{item.d_id}}</td>
+                <td>
+                    <label for="" id="showimg" class=" label btn-primary" data-imgsrc="{{item.s_photo}}" data-toggle="modal"
+                        data-target="#modal2">查看照片</label>
+                </td>
+                <td>
+                    <label for="" class=" label btn-warning">编辑</label>
+                    <label for="" class=" label btn-danger">删除</label>
+                </td>
+            </tr>
+            {{/each}}
+        </table>
+    </div>
+</div>
+<div class=" modal fade" id="modal2">
+    <div class=" modal-dialog">
+        <div class=" modal-content">
+            <div class=" modal-header">
+                <span class=" close" data-dismiss="modal">&times;</span>
+                <h2 class=" text-center text-primary">照片</h2>
+            </div>
+            <div class=" modal-body">
+                <img id="modalimg" alt="" class=" img-responsive img-thumbnail" style="width:100%;height:100%;">
+            </div>
+            <div class=" modal-footer">
+                <button type="reset" class=" btn btn-primary btn-block" data-dismiss="modal">关闭</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(function () {
+        $(".table").on("click", "label", function (event) {
+            event = window.event || event;
+            if (event.target.id == "showimg") {
+                var text = $(this).data("imgsrc");
+                console.log(text);
+                $("#modalimg").attr("src", "../.." + text);
+            }
+        });
+    })
+</script>
+<style type="text/css">
+    #modal2 modal-body {
+        width: 100%;
+        display: flex;
+        justify-items: center;
+        align-items: center;
+    }
+</style>
+{{include "../footer.html"}}

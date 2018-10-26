@@ -12,7 +12,7 @@
                 <select name="{{item[0]}}" class=" form-control">
                     <option value="">--请选择宿管编号--</option>
                     {{each result item index}}
-                    <option value="{{item.da_id}}">{{item.da_id}}</option>
+                    <option value="{{item.da_id}}">{{item.da_id}}--{{item.da_name}}</option>
                     {{/each}}
                 </select>
             </div>

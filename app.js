@@ -11,7 +11,8 @@ const express = require("express"),
 
 const adminRouter = require("./routes/adminRouter"),
     dormadminRouter = require("./routes/dormadminRouter"),
-    dormRouter = require("./routes/dormRouter");
+    dormRouter = require("./routes/dormRouter"),
+    studentRouter = require("./routes/studentRouter");
 
 let app = express();
 let server = http.createServer(app);
@@ -48,6 +49,7 @@ app.use((req, resp, next) => {
 app.use("/admin", adminRouter);
 app.use("/dormadmin", dormadminRouter);
 app.use("/dorm", dormRouter);
+app.use("/student", studentRouter);
 
 //登录页
 app.get("/", (req, resp) => {

@@ -5,11 +5,11 @@ let menuConfig = [
         item: [
             {
                 text: "新增学生",
-                url: "#"
+                url: "/student/addStudent"
             },
             {
                 text: "学生列表",
-                url: "#"
+                url: "/student/student_list"
             }
         ]
     },
