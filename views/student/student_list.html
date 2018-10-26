@@ -94,7 +94,6 @@
             event = window.event || event;
             if (event.target.id == "showimg") {
                 var text = $(this).data("imgsrc");
-                console.log(text);
                 $("#modalimg").attr("src", "../.." + text);
             }
         });
