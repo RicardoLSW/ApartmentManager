@@ -43,7 +43,6 @@
             var reg = /^(image)\/(jpg|jpeg|bmp|gif|png|svg|ttf)$/;
             var file = this.files[0];
             if (reg.test(file.type)) {
-                //说明是图片
                 var fileReader = new FileReader();
                 fileReader.onload = function (event) {
                     var base64 = event.target.result;
