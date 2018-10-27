@@ -107,7 +107,7 @@
                 <div class=" modal-footer">
                     <div class=" form-group">
                         <div class=" col-sm-7 col-sm-offset-3">
-                            <button type="submit" class=" btn btn-primary btn-submit-loading">保存</button>
+                            <button type="submit" class=" btn btn-primary btn-submit-loading" disabled>保存</button>
                             <button type="reset" class=" btn btn-warning" data-dismiss="modal">关闭</button>
                         </div>
                     </div>
@@ -141,6 +141,10 @@
                 $("#modalimg").attr("src", "../.." + text);
             }
             if (event.target.id == "edit") {
+                $(".btn-submit-loading").prop("disabled", true)
+                $("#modal1 .form-control").change(function () {
+                    $(".btn-submit-loading").prop("disabled", false)
+                })
                 var arr = [];
                 $(event.target.parentElement).prevAll().not(":first").not(":last").each(function (index, element) {
                     // element == this
