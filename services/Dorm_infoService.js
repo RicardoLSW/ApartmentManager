@@ -11,65 +11,32 @@ class Dorm_infoService extends BaseService {
     constructor() {
         super("dorm_info");
     }
+
     /**
      * @name 新增宿舍
      */
     doAddDorm(model) {
-        return new Promise((resolve, reject) => {
-            let conn = super.getConn();
-            let values = Object.values(model)
-            let insertStr = super.createInsertSql(model);
-            conn.query(insertStr, values, (err, result) => {
-                if (err) {
-                    reject(err);
-                }
-                else {
-                    let flag = result.affectedRows == 1 ? true : false;
-                    resolve(flag);
-                }
-                conn.end();
-            })
-        })
+        return super.insertData(model);
     }
+
     /**
      * @name 宿舍列表
      */
     dorm_list() {
-        return new Promise((resolve, reject) => {
-            let conn = super.getConn();
-            let selectStr = `SELECT * FROM ${this.tableName} WHERE isDel=false`;
-            conn.query(selectStr, [], (err, result) => {
-                if (err) {
-                    reject(err);
-                }
-                else {
-                    resolve(result);
-                }
-                conn.end();
-            })
-        })
+        return super.dataList();
     }
+
     /**
      * @name 修改宿舍信息
      * @param {*} model 宿舍信息模型
      */
     upDorm(model) {
-        return new Promise((resolve, reject) => {
-            let conn = super.getConn();
-            let values = Object.values(model);
-            let insertStr = super.createUpdateSql(model);
-            conn.query(insertStr, values.slice(1).concat(values.slice(0, 1)), (err, result) => {
-                if (err) {
-                    reject(err);
-                }
-                else {
-                    let flag = result.affectedRows == 1 ? true : false;
-                    resolve(flag);
-                }
-                conn.end();
-            })
-        })
+        return super.updateData(model);
     }
+
+    /**
+     * @name 删除宿舍
+     */
     delDorm({ d_id }) {
         return new Promise((resolve, reject) => {
             let conn = super.getConn();
@@ -86,6 +53,7 @@ class Dorm_infoService extends BaseService {
             })
         })
     }
+
     /**
      * @name 批量删除宿舍
      * @param {*} d_idArr 选中的宿舍编号数组
@@ -106,6 +74,11 @@ class Dorm_infoService extends BaseService {
             })
         })
     }
+
+    /**
+     * @name 查询宿舍信息
+     * @param {Object} param0 要查询的宿舍信息对象
+     */
     queryDormList({ d_id, d_num, d_type }) {
         return new Promise((resolve, reject) => {
             let conn = super.getConn();

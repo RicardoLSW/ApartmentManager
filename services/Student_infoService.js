@@ -11,55 +11,33 @@ class Studeng_infoService extends BaseService {
     constructor() {
         super("student_info");
     }
+
+    /**
+     * @name 学生列表
+     */
     student_list() {
-        return new Promise((resolve, reject) => {
-            let conn = super.getConn();
-            let selectStr = `SELECT * FROM ${this.tableName} WHERE isDel=0`;
-            conn.query(selectStr, [], (err, result) => {
-                if (err) {
-                    reject(err);
-                }
-                else {
-                    resolve(result);
-                }
-                conn.end();
-            })
-        })
+        return super.dataList();
     }
+
+    /**
+     * @name 新增学生
+     * @param {Object} mdoel 学生信息模型
+     */
     doAddStudent(model) {
-        return new Promise((resolve, reject) => {
-            let conn = super.getConn();
-            let values = Object.values(model);
-            let insertStr = super.createInsertSql(model);
-            conn.query(insertStr, values, (err, result) => {
-                if (err) {
-                    reject(err);
-                }
-                else {
-                    let flag = result.affectedRows == 1 ? true : false;
-                    resolve(flag);
-                }
-                conn.end();
-            })
-        })
+        return super.insertData(model);
     }
+
+    /**
+     * @name 修改学生信息
+     */
     upStudent(model) {
-        return new Promise((resolve, reject) => {
-            let conn = super.getConn();
-            let values = Object.values(model);
-            let updateStr = super.createUpdateSql(model);
-            conn.query(updateStr, values.slice(1).concat(values.slice(0, 1)), (err, result) => {
-                if (err) {
-                    reject(err);
-                }
-                else {
-                    let flag = result.affectedRows == 1 ? true : false;
-                    resolve(flag);
-                }
-                conn.end();
-            })
-        })
+        return super.updateData(model);
     }
+
+    /**
+     * @name 学生信息查询
+     * @param {Object} param0 学生信息
+     */
     queryList({ s_id, s_name, s_sex }) {
         return new Promise((resolve, reject) => {
             let conn = super.getConn();
@@ -86,6 +64,10 @@ class Studeng_infoService extends BaseService {
             })
         })
     }
+
+    /**
+     * @name 删除学生信息
+     */
     delStudent({ s_id }) {
         return new Promise((resolve, reject) => {
             let conn = super.getConn();
@@ -102,6 +84,11 @@ class Studeng_infoService extends BaseService {
             })
         })
     }
+
+    /**
+     * @name 批量删除学生
+     * @param {Array} s_idArr 选中的学生数组
+     */
     delAllStudent(s_idArr) {
         return new Promise((resolve, reject) => {
             let conn = super.getConn();

@@ -11,45 +11,30 @@ class Dormadmin_infoService extends BaseService {
     constructor() {
         super("dormadmin_info");
     }
+
     /**
      * @name 新增宿管
      * @param {Object} model 宿管信息对象
      */
     doAddDormadmin(model) {
-        return new Promise((resolve, reject) => {
-            let values = Object.values(model);
-            let conn = super.getConn();
-            let insertSql = super.createInsertSql(model);
-            conn.query(insertSql, values, (err, result) => {
-                if (err) {
-                    reject(err);
-                }
-                else {
-                    let flag = result.affectedRows > 0 ? true : false;
-                    resolve(flag);
-                }
-                conn.end();
-            })
-        })
+        return super.insertData(model);
     }
+
     /**
      * @name 宿管列表查询
      */
     dormadmin_list() {
-        return new Promise((resolve, reject) => {
-            let conn = super.getConn();
-            let selectStr = `SELECT * FROM ${this.tableName} WHERE isDel=0`;
-            conn.query(selectStr, [], (err, result) => {
-                if (err) {
-                    reject(err);
-                }
-                else {
-                    resolve(result);
-                }
-                conn.end();
-            })
-        })
+        return super.dataList();
     }
+
+    /**
+     * @name 修改宿管信息
+     * @param {Object} model 宿管信息对象
+     */
+    upDormadmin(model) {
+        return super.updateData(model);
+    }
+
     /**
      * @name 删除宿管
      * @param {*} param0 宿管id
@@ -70,6 +55,7 @@ class Dormadmin_infoService extends BaseService {
             })
         })
     }
+
     /**
      * @name 批量删除宿管信息
      * @param {*} da_idArr 选中的宿管编号数组
@@ -90,6 +76,7 @@ class Dormadmin_infoService extends BaseService {
             })
         })
     }
+
     /**
      * @name 查询功能
      * @param {*} param0 查询信息
@@ -115,27 +102,6 @@ class Dormadmin_infoService extends BaseService {
                 }
                 else {
                     resolve(result);
-                }
-                conn.end();
-            })
-        })
-    }
-    /**
-     * @name 修改宿管信息
-     * @param {Object} model 宿管信息对象
-     */
-    upDormadmin(model) {
-        return new Promise((resolve, reject) => {
-            let conn = super.getConn();
-            let values = Object.values(model);
-            let updateStr = super.createUpdateSql(model);
-            conn.query(updateStr, values.slice(1).concat(values.slice(0, 1)), (err, result) => {
-                if (err) {
-                    reject(err);
-                }
-                else {
-                    let flag = result.affectedRows == 1 ? true : false;
-                    resolve(flag);
                 }
                 conn.end();
             })
