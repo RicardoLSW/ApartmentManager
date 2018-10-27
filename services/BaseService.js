@@ -90,6 +90,24 @@ class BaseService extends DBHelper {
             })
         })
     }
+    /**
+     * @name 查询已删除数据
+     */
+    dataListIsDel() {
+        return new Promise((resolve, reject) => {
+            let conn = super.getConn();
+            let selectStr = `SELECT * FROM ${this.tableName} WHERE isDel=1`;
+            conn.query(selectStr, [], (err, result) => {
+                if (err) {
+                    reject(err);
+                }
+                else {
+                    resolve(result);
+                }
+                conn.end();
+            })
+        })
+    }
 }
 
 module.exports = BaseService;

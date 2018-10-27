@@ -32,6 +32,9 @@ router.post("/checkLogin", async (req, resp) => {
                 MessageBox.showAndRedirect("登陆成功！", "adminIndex", resp);
             }
         }
+        else {
+            MessageBox.showAndBack("用户名或密码错误!", resp);
+        }
     } catch (error) {
         MessageBox.showAndBack("服务器错误", resp);
     }

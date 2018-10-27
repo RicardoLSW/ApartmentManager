@@ -10,6 +10,10 @@ let menuConfig = [
             {
                 text: "学生列表",
                 url: "/student/student_list"
+            },
+            {
+                text: "已删除学生",
+                url: "#"
             }
         ]
     },
@@ -28,6 +32,10 @@ let menuConfig = [
             {
                 text: "楼栋列表",
                 url: "#"
+            },
+            {
+                text: "已删除宿舍",
+                url: "#"
             }
         ]
     },
@@ -42,6 +50,10 @@ let menuConfig = [
             {
                 text: "宿管列表",
                 url: "/dormadmin/dormadmin_list"
+            },
+            {
+                text: "已删除宿舍",
+                url: "/dormadmin/delDormadminList"
             }
         ]
     }
