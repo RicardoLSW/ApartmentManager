@@ -10,15 +10,15 @@
     </div>
     <form action="" method="GET" class=" form-inline" style="margin:5px 0px;">
         <div class=" form-group">
-            <label for="" class=" control-label">学号：</label>
-            <input type="text" class=" form-control" name="s_id">
+            <label for="" class=" control-label">学号</label>
+            <span><input type="text" class=" form-control" name="s_id"></span>
         </div>
         <div class=" form-group">
-            <label for="" class=" control-label">姓名：</label>
-            <input type="text" class=" form-control" name="s_name">
+            <label for="" class=" control-label">姓名</label>
+            <span><input type="text" class=" form-control" name="s_name"></span>
         </div>
         <div class=" form-group">
-            <label for="" class=" control-label">性别：</label>
+            <label for="" class=" control-label">性别</label>
             <select name="s_sex" id="" class=" form-control">
                 <option value="">--请选择--</option>
                 <option value="男">男</option>
@@ -64,12 +64,56 @@
                         data-target="#modal2">查看照片</label>
                 </td>
                 <td>
-                    <label for="" class=" label btn-warning">编辑</label>
-                    <label for="" class=" label btn-danger">删除</label>
+                    <label for="" id="edit" class=" label btn-warning" data-toggle="modal" data-target="#modal1">编辑</label>
+                    <label for="" id="delete" class=" label btn-danger">删除</label>
                 </td>
             </tr>
             {{/each}}
         </table>
+    </div>
+</div>
+<div class=" modal fade" id="modal1">
+    <div class=" modal-dialog">
+        <div class=" modal-content">
+            <div class=" modal-header">
+                <span class=" close" data-dismiss="modal">&times;</span>
+                <h2 class=" text-center text-primary">编辑</h2>
+            </div>
+            <form method="POST" action="/student/upStudent" class=" form-horizontal" enctype="multipart/form-data">
+                <div class=" modal-body">
+                    {{each student_info item index}}
+                    <% var obj = {item} %>
+                    {{if item[1]=="性别"}}
+                    {{include "../bs_views/form_group_select.html" obj}}
+                    {{else if item[1]=="照片"}}
+                    {{include "../bs_views/form_group_upimage.html" obj}}
+                    {{else if item[1]=="宿舍"}}
+                    <div class=" form-group">
+                        <label for="" class=" col-sm-2 control-label">{{item[1]}}</label>
+                        <div class=" col-sm-7">
+                            <select name="{{item[0]}}" class=" form-control">
+                                <option value="">--请选择宿舍--</option>
+                                {{each dorm_info item index}}
+                                <option value="{{item.d_id}}">{{item.d_id}}--{{item.d_type}}</option>
+                                {{/each}}
+                            </select>
+                        </div>
+                    </div>
+                    {{else}}
+                    {{include "../bs_views/form_group_input.html" obj}}
+                    {{/if}}
+                    {{/each}}
+                </div>
+                <div class=" modal-footer">
+                    <div class=" form-group">
+                        <div class=" col-sm-7 col-sm-offset-3">
+                            <button type="submit" class=" btn btn-primary btn-submit-loading">保存</button>
+                            <button type="reset" class=" btn btn-warning" data-dismiss="modal">关闭</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
     </div>
 </div>
 <div class=" modal fade" id="modal2">
@@ -96,15 +140,41 @@
                 var text = $(this).data("imgsrc");
                 $("#modalimg").attr("src", "../.." + text);
             }
+            if (event.target.id == "edit") {
+                var arr = [];
+                $(event.target.parentElement).prevAll().not(":first").not(":last").each(function (index, element) {
+                    // element == this
+                    arr.unshift($(this).text());
+                });
+                $("#modal1 .form-control").not(":last").each(function (index, element) {
+                    // element == this
+                    $(this).val(arr[index]);
+                });
+                var text = $(this).parent().prev().children().data("imgsrc");
+                $("#modal1 #btnChooseFile").attr("src", text);
+            }
         });
+        $(".form-control").inputTips();
+        $("#modal1 input:first").prop("readonly", true);
+        $("#btnChooseFile").click(function () {
+            $("#s_photo").click();
+        });
+        $("#s_photo").change(function () {
+            var reg = /^(image)\/(jpg|jpeg|bmp|gif|png|svg|ttf)$/;
+            var file = this.files[0];
+            if (reg.test(file.type)) {
+                var fileReader = new FileReader();
+                fileReader.onload = function (event) {
+                    var base64 = event.target.result;
+                    $("#btnChooseFile").attr("src", base64);
+                }
+                fileReader.readAsDataURL(file);
+            }
+            else {
+                alert("请选择图片");
+                $(this).val("");
+            }
+        })
     })
 </script>
-<style type="text/css">
-    #modal2 modal-body {
-        width: 100%;
-        display: flex;
-        justify-items: center;
-        align-items: center;
-    }
-</style>
 {{include "../footer.html"}}

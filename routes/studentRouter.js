@@ -30,8 +30,10 @@ router.get("/addStudent", async (req, resp) => {
 
 router.get("/student_list", async (req, resp) => {
     try {
+        let student_info = Object.entries(new Student_info());
+        let dorm_info = await new Dorm_infoService().dorm_list();
         let result = await new Student_infoService().student_list();
-        resp.render("student/student_list", { result });
+        resp.render("student/student_list", { result, student_info, dorm_info });
     } catch (error) {
         MessageBox.showAndBack("服务器错误!", resp);
     }
@@ -53,6 +55,25 @@ router.post("/doAddStudent", upload.single("s_photo"), async (req, resp) => {
         }
     } catch (error) {
         MessageBox.showAndBack("服务其错误!" + error, resp);
+    }
+})
+
+router.post("/upStudent", upload.single("s_photo"), async (req, resp) => {
+    let file = req.file;
+    let extName = file.originalname.substr(file.originalname.lastIndexOf("."));
+    let newPath = file.path + extName;
+    fs.renameSync(file.path, newPath);
+    req.body.s_photo = "/public/upimages/" + file.filename + extName;
+    try {
+        let flag = await new Student_infoService().upStudent(req.body);
+        if (flag) {
+            MessageBox.showAndRedirect("修改成功!", "student_list", resp);
+        }
+        else {
+            MessageBox.showAndBack("修改失败!", resp);
+        }
+    } catch (error) {
+        MessageBox.showAndBack("服务器错误!" + error, resp);
     }
 })
 

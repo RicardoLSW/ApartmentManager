@@ -42,6 +42,23 @@ class Studeng_infoService extends BaseService {
             })
         })
     }
+    upStudent(model) {
+        return new Promise((resolve, reject) => {
+            let conn = super.getConn();
+            let values = Object.values(model);
+            let updateStr = super.createUpdateSql(model);
+            conn.query(updateStr, values.slice(1).concat(values.slice(0, 1)), (err, result) => {
+                if (err) {
+                    reject(err);
+                }
+                else {
+                    let flag = result.affectedRows == 1 ? true : false;
+                    resolve(flag);
+                }
+                conn.end();
+            })
+        })
+    }
 }
 
 module.exports = Studeng_infoService;
