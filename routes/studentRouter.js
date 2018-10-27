@@ -8,12 +8,12 @@ const router = require("express").Router(),
     Student_infoService = require("../services/Student_infoService"),
     body = require("body-parser"),
     MessageBox = require("../utils/MessageBox"),
-    ObjectHelper = require("../utils/ObjectHelper"),
     Student_info = require("../model/Student_info"),
     Dorm_infoService = require("../services/Dorm_infoService"),
     multer = require("multer"),
     fs = require("fs"),
-    path = require("path");
+    path = require("path"),
+    PageJson = require("../model/PageJson");
 
 router.use(body.json());
 router.use(body.urlencoded({ extended: false }));
@@ -74,6 +74,50 @@ router.post("/upStudent", upload.single("s_photo"), async (req, resp) => {
         }
     } catch (error) {
         MessageBox.showAndBack("服务器错误!" + error, resp);
+    }
+})
+
+router.get("/queryList", async (req, resp) => {
+    try {
+        let result = await new Student_infoService().queryList(req.query);
+        resp.render("student/student_list", { result });
+    } catch (error) {
+        MessageBox.showAndBack("服务器错误!" + error, resp);
+    }
+})
+
+router.get("/delStudent", async (req, resp) => {
+    try {
+        let flag = await new Student_infoService().delStudent(req.query);
+        if (flag) {
+            let pageJson = new PageJson("success", "删除成功!");
+            resp.json(pageJson);
+        }
+        else {
+            let pageJson = new PageJson("error", "删除失败!");
+            resp.json(pageJson);
+        }
+    } catch (error) {
+        let pageJson = new PageJson("error", "服务器错误!");
+        resp.json(pageJson);
+    }
+})
+
+router.get("/delAllStudent", async (req, resp) => {
+    try {
+        let s_idArr = req.query.s_idArr.split("-");
+        let flag = await new Student_infoService().delAllStudent(s_idArr);
+        if (flag) {
+            let pageJson = new PageJson("success", "批量删除成功!");
+            resp.json(pageJson);
+        }
+        else {
+            let pageJson = new PageJson("error", "批量删除失败!");
+            resp.json(pageJson);
+        }
+    } catch (error) {
+        let pageJson = new PageJson("error", "服务器错误!");
+        resp.json(pageJson);
     }
 })
 

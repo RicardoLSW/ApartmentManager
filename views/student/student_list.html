@@ -8,7 +8,7 @@
             批量删除
         </button>
     </div>
-    <form action="" method="GET" class=" form-inline" style="margin:5px 0px;">
+    <form action="/student/queryList" method="GET" class=" form-inline" style="margin:5px 0px;">
         <div class=" form-group">
             <label for="" class=" control-label">学号</label>
             <span><input type="text" class=" form-control" name="s_id"></span>
@@ -65,7 +65,7 @@
                 </td>
                 <td>
                     <label for="" id="edit" class=" label btn-warning" data-toggle="modal" data-target="#modal1">编辑</label>
-                    <label for="" id="delete" class=" label btn-danger">删除</label>
+                    <label for="" id="delete" data-s_id="{{item.s_id}}" class=" label btn-danger">删除</label>
                 </td>
             </tr>
             {{/each}}
@@ -153,6 +153,22 @@
                 var text = $(this).parent().prev().children().data("imgsrc");
                 $("#modal1 #btnChooseFile").attr("src", text);
             }
+            if (event.target.id == "delete") {
+                var s_id = $(this).data("s_id");
+                if (confirm("确认操作！")) {
+                    $.get("/student/delStudent?s_id=" + s_id,
+                        function (data, textStatus, jqXHR) {
+                            if (data.status == "success") {
+                                alert(data.msg);
+                                location.reload();
+                            }
+                            else {
+                                alert(data.msg);
+                            }
+                        }
+                    );
+                }
+            }
         });
         $(".form-control").inputTips();
         $("#modal1 input:first").prop("readonly", true);
@@ -175,6 +191,29 @@
                 $(this).val("");
             }
         })
+        $("#delAll").click(function (e) {
+            if ($("[name='ck']:checked").length > 0) {
+                if (confirm("你确定要删除所有选中项吗！")) {
+                    let s_idArr = [];
+                    $("[name='ck']:checked").each(function (index, element) {
+                        // element == this
+                        s_idArr.push($(this).val());
+                    });
+                    console.log(s_idArr);
+                    $.get("/student/delAllStudent?s_idArr=" + s_idArr.join("-"),
+                        function (data, textStatus, jqXHR) {
+                            if (data.status == "success") {
+                                alert(data.msg);
+                                location.reload();
+                            }
+                            else {
+                                alert(data.msg);
+                            }
+                        }
+                    );
+                }
+            }
+        });
     })
 </script>
 {{include "../footer.html"}}

@@ -4,7 +4,8 @@
  * @version 1.0
  */
 
-const BaseService = require("./BaseService");
+const BaseService = require("./BaseService"),
+    ObjectHelper = require("../utils/ObjectHelper");
 
 class Studeng_infoService extends BaseService {
     constructor() {
@@ -53,6 +54,64 @@ class Studeng_infoService extends BaseService {
                 }
                 else {
                     let flag = result.affectedRows == 1 ? true : false;
+                    resolve(flag);
+                }
+                conn.end();
+            })
+        })
+    }
+    queryList({ s_id, s_name, s_sex }) {
+        return new Promise((resolve, reject) => {
+            let conn = super.getConn();
+            let selectStr = `SELECT * FROM ${this.tableName} WHERE isDel=0`;
+            let str = "";
+            if (!ObjectHelper.isNullAndUndefined(s_id)) {
+                str += ` AND s_id LIKE "%${s_id}%"`;
+            }
+            if (!ObjectHelper.isNullAndUndefined(s_name)) {
+                str += ` AND s_name LIKE "%${s_name}%"`;
+            }
+            if (!ObjectHelper.isNullAndUndefined(s_sex)) {
+                str += ` AND s_sex="${s_sex}"`;
+            }
+            selectStr += str;
+            conn.query(selectStr, [], (err, result) => {
+                if (err) {
+                    reject(err);
+                }
+                else {
+                    resolve(result);
+                }
+                conn.end();
+            })
+        })
+    }
+    delStudent({ s_id }) {
+        return new Promise((resolve, reject) => {
+            let conn = super.getConn();
+            let delStr = `UPDATE ${this.tableName} SET isDel=1 WHERE s_id=?`;
+            conn.query(delStr, [s_id], (err, result) => {
+                if (err) {
+                    reject(err);
+                }
+                else {
+                    let flag = result.affectedRows == 1 ? true : false;
+                    resolve(flag);
+                }
+                conn.end();
+            })
+        })
+    }
+    delAllStudent(s_idArr) {
+        return new Promise((resolve, reject) => {
+            let conn = super.getConn();
+            let delStr = `UPDATE ${this.tableName} SET isDel=1 WHERE s_id IN (${new Array(s_idArr.length).fill("?").toString()})`;
+            conn.query(delStr, s_idArr, (err, result) => {
+                if (err) {
+                    reject(err);
+                }
+                else {
+                    let flag = result.affectedRows > 0 ? true : false;
                     resolve(flag);
                 }
                 conn.end();
