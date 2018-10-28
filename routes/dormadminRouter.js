@@ -92,6 +92,7 @@ router.get("/queryList", async (req, resp) => {
     }
 })
 
+//修改宿管信息
 router.post("/upDormadmin", async (req, resp) => {
     try {
         let flag = await new Dormadmin_infoService().upDormadmin(req.body);
@@ -104,6 +105,11 @@ router.post("/upDormadmin", async (req, resp) => {
     } catch (error) {
         MessageBox.showAndBack("服务器错误!", resp);
     }
+})
+
+//已删除宿管页面
+router.get("/delDormadminList", (req, resp) => {
+    resp.render("dormadmin/delDormadminList");
 })
 
 module.exports = router;
