@@ -1,0 +1,87 @@
+<% var obj = {pageTitle:"注册/绑定"} %>
+{{include "../header.html" obj}}
+<div class=" container">
+    {{include "../pageHeader.html" obj}}
+    <div class="col-md-4 col-md-offset-4">
+        <ul class="nav nav-tabs nav-justified">
+            <li class="active"><a href="#paneLogin" data-toggle="tab">注册账号</a></li>
+            <li><a href="#paneRegister" data-toggle="tab">已有账号</a></li>
+        </ul>
+        <div class="tab-content" style="margin-top:20px">
+            <div class="tab-pane fade in active" id="paneLogin">
+                <form class=" form-horizontal" method="POST" action="/admin/register" enctype="application/x-www-form-urlencoded">
+                    <div class=" form-group">
+                        <div class=" input-group">
+                            <div class=" input-group-addon">
+                                <span class=" glyphicon glyphicon-user"></span>
+                            </div>
+                            <input type="text" class=" form-control" data-tip="账号" name="userName">
+                        </div>
+                    </div>
+                    <div class=" form-group">
+                        <div class=" input-group">
+                            <div class=" input-group-addon">
+                                <span class=" glyphicon glyphicon-lock"></span>
+                            </div>
+                            <input type="password" class=" form-control" data-tip="密码" name="userPwd">
+                        </div>
+                    </div>
+                    <input type="hidden" value="{{model.openid}}" name="openid">
+                    <div class=" form-group">
+                        <div class=" input-group">
+                            <div class=" input-group-addon">
+                                <span class=" glyphicon glyphicon-asterisk"></span>
+                            </div>
+                            <input type="password" class=" form-control" data-tip="确认密码">
+                        </div>
+                    </div>
+                    <div class=" form-group">
+                        <div class=" input-group">
+                            <div class=" input-group-addon">
+                                <span class=" glyphicon glyphicon-envelope"></span>
+                            </div>
+                            <input type="email" class=" form-control" data-tip="邮件">
+                            <div class="input-group-btn">
+                                <button type="button" class="btn btn-default">获取验证码
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class=" form-group">
+                        <button type="submit" class=" btn btn-primary btn-block btn-submit-loading">注册</button>
+                    </div>
+                </form>
+            </div>
+            <div class="tab-pane" id="paneRegister">
+                <form class=" form-horizontal" method="POST" action="/admin/bindOldUser" enctype="application/x-www-form-urlencoded">
+                    <div class=" form-group">
+                        <div class=" input-group">
+                            <div class=" input-group-addon">
+                                <span class=" glyphicon glyphicon-user"></span>
+                            </div>
+                            <input type="text" class=" form-control" data-tip="账号" name="userName">
+                        </div>
+                    </div>
+                    <div class=" form-group">
+                        <div class=" input-group">
+                            <div class=" input-group-addon">
+                                <span class=" glyphicon glyphicon-lock"></span>
+                            </div>
+                            <input type="password" class=" form-control" data-tip="密码" name="userPwd">
+                        </div>
+                    </div>
+                    <input type="hidden" value="{{model.openid}}" name="openid">
+                    <div class=" form-group">
+                        <button type="submit" class=" btn btn-primary btn-block btn-submit-loading">绑定</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(function () {
+        $(".form-control").inputTips();
+    })
+</script>
+{{include "../footer.html"}}

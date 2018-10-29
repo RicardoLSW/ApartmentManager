@@ -14,19 +14,36 @@ class Admin_infoService extends BaseService {
     checkLogin({ userName, userPwd, userType }) {
         return new Promise((resolve, reject) => {
             let conn = super.getConn();
+            userType = userType || "超级管理员";
             let selectStr = `SELECT * FROM ${this.tableName} WHERE userName=? AND userPwd=? AND userType=?`;
             conn.query(selectStr, [userName, userPwd, userType], (err, result) => {
                 if (err) {
                     reject(err);
                 }
                 else {
-                    let flag = result.length == 1 ? true : false;
-                    resolve(flag);
+                    resolve(result);
                 }
                 conn.end();
             })
         })
     }
+    checkOpenid(openid) {
+        return new Promise((resolve, reject) => {
+            let conn = super.getConn();
+            let selectStr = `SELECT * FROM ${this.tableName} WHERE isDel=0 AND openid=?`;
+            conn.query(selectStr, [openid], (err, result) => {
+                if (err) {
+                    reject(err);
+                }
+                else {
+                    resolve(result);
+                }
+                conn.end();
+            })
+        })
+    }
+    bindOldUser(model) {
+        return super.updateData(model);
+    }
 }
-
 module.exports = Admin_infoService;
