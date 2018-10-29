@@ -35,6 +35,10 @@ class Dormadmin_infoService extends BaseService {
         return super.updateData(model);
     }
 
+    deletedDormamdin() {
+        return super.dataListIsDel();
+    }
+
     /**
      * @name 删除宿管
      * @param {*} param0 宿管id

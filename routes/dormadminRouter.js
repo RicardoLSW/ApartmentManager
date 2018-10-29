@@ -108,8 +108,13 @@ router.post("/upDormadmin", async (req, resp) => {
 })
 
 //已删除宿管页面
-router.get("/delDormadminList", (req, resp) => {
-    resp.render("dormadmin/delDormadminList");
+router.get("/delDormadminList", async (req, resp) => {
+    try {
+        let result = await new Dormadmin_infoService().deletedDormamdin();
+        resp.render("dormadmin/delDormadminList", { result });
+    } catch (error) {
+        MessageBox.showAndBack("服务器错误!", resp);
+    }
 })
 
 module.exports = router;
