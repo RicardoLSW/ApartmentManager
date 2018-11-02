@@ -37,7 +37,7 @@ app.use((req, resp, next) => {
         next();
     }
     else {
-        if (req.path == "/admin/login" || req.path == "/admin/checkLogin" || req.path == "/admin/scanCode" || req.path == "/admin/bindUserInfo" || req.path == "/admin/bindOldUser") {
+        if (req.path == "/admin/login" || req.path == "/admin/checkLogin" || req.path == "/admin/scanCode" || req.path == "/admin/bindUserInfo" || req.path == "/admin/bindOldUser" || req.path == "/admin/getCheckCode") {
             next();
         }
         else {

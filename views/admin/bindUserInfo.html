@@ -40,11 +40,19 @@
                             <div class=" input-group-addon">
                                 <span class=" glyphicon glyphicon-envelope"></span>
                             </div>
-                            <input type="email" class=" form-control" data-tip="邮件">
+                            <input type="email" class=" form-control" data-tip="邮件" id="userEmail">
                             <div class="input-group-btn">
                                 <button type="button" class="btn btn-default">获取验证码
                                 </button>
                             </div>
+                        </div>
+                    </div>
+                    <div class=" form-group">
+                        <div class=" input-group">
+                            <div class=" input-group-addon">
+                                <span class=" glyphicon glyphicon-asterisk"></span>
+                            </div>
+                            <input type="password" class=" form-control" data-tip="验证码" name="checkCode">
                         </div>
                     </div>
                     <div class=" form-group">
@@ -82,6 +90,26 @@
 <script>
     $(function () {
         $(".form-control").inputTips();
+        $(".btn-default").click(function (e) {
+            if ($("#userEmail").val() == "") {
+                layer.msg("邮箱不能为空");
+            }
+            else {
+                var userEmail = $("#userEmail").val();
+                $.get("/admin/getCheckCode?userEmail=" + userEmail,
+                    function (data, textStatus, jqXHR) {
+                        console.log(userEmail);
+                        if (data.status == "success") {
+                            layer.msg(data.msg);
+                            console.log(textStatus, jqXHR);
+                        }
+                        else {
+                            layer.msg(data.msg);
+                        }
+                    }
+                );
+            }
+        });
     })
 </script>
 {{include "../footer.html"}}

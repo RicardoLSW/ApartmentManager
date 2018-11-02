@@ -10,6 +10,8 @@ const MessageBox = require("../utils/MessageBox");
 const Admin_infoService = require("../services/Admin_infoService");
 const menuConfig = require("../config/menuConfig");
 const DingHelper = require("../utils/DingHelper");
+const MailHelper = require("../utils/MailHelper");
+const PageJson = require("../model/PageJson");
 
 router.use(body.json());
 router.use(body.urlencoded({ extended: false }));
@@ -101,6 +103,19 @@ router.post("/bindOldUser", async (req, resp) => {
         }
     } catch (error) {
         MessageBox.showAndBack("服务器错误!", resp);
+    }
+})
+
+router.get("/getCheckCode", async (req, resp) => {
+    try {
+        let { userEmail } = req.query
+        let info = await new MailHelper().sendToMail(userEmail);
+        console.log(info);
+        let pageJson = new PageJson("success", "验证码发送成功");
+        resp.json(pageJson);
+    } catch (error) {
+        let pageJson = new PageJson("error", "验证码发送失败");
+        resp.json(pageJson);
     }
 })
 
