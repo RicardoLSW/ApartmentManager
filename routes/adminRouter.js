@@ -109,13 +109,35 @@ router.post("/bindOldUser", async (req, resp) => {
 router.get("/getCheckCode", async (req, resp) => {
     try {
         let { userEmail } = req.query
-        let info = await new MailHelper().sendToMail(userEmail);
-        console.log(info);
+        req.session.code = parseInt(Math.random() * 9999);
+        let info = await new MailHelper().sendToMail(userEmail, req.session.code);
         let pageJson = new PageJson("success", "验证码发送成功");
         resp.json(pageJson);
     } catch (error) {
         let pageJson = new PageJson("error", "验证码发送失败");
         resp.json(pageJson);
+    }
+})
+
+router.post("/register", async (req, resp) => {
+    try {
+        if (req.session.code == req.body.checkCode) {
+            delete req.body.checkCode;
+            let flag = await new Admin_infoService().rejester(req.body);
+            if (flag) {
+                delete req.body.userPwd;
+                req.session.userInfo = req.body;
+                MessageBox.showAndRedirect("注册成功！", "adminIndex", resp);
+            }
+            else {
+                MessageBox.showAndBack("注册失败!", resp);
+            }
+        }
+        else {
+            MessageBox.showAndBack("验证码错误", resp);
+        }
+    } catch (error) {
+        MessageBox.showAndBack("服务器错误!" + error, resp);
     }
 })
 

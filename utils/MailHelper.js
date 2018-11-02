@@ -7,7 +7,7 @@
 const nodemailer = require("nodemailer");
 
 class MailHelper {
-    sendToMail(userEmail) {
+    sendToMail(userEmail, code) {
         return new Promise((resolve, reject) => {
             let mail = nodemailer.createTransport({
                 service: "qq",
@@ -20,7 +20,7 @@ class MailHelper {
                 from: "1043009478@qq.com",
                 to: userEmail,
                 subject: "公寓管理系统",
-                text: "本次注册验证码是：" + parseInt(Math.random() * 9999)
+                text: "本次注册验证码是：" + code
             }, (err, info) => {
                 if (err) {
                     reject(err);

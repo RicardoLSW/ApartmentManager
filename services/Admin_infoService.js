@@ -45,5 +45,8 @@ class Admin_infoService extends BaseService {
     bindOldUser(model) {
         return super.updateData(model);
     }
+    rejester(model) {
+        return super.insertData(model);
+    }
 }
 module.exports = Admin_infoService;
