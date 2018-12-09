@@ -43,7 +43,7 @@ router.post("/checkLogin", async (req, resp) => {
             MessageBox.showAndBack("用户名或密码错误!", resp);
         }
     } catch (error) {
-        MessageBox.showAndBack("服务器错误", resp);
+        MessageBox.showAndBack("服务器错误" + error, resp);
     }
 })
 
