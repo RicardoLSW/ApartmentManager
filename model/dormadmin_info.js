@@ -12,4 +12,5 @@ class Dormadmin_info {
     }
 }
 
+
 module.exports = Dormadmin_info;
