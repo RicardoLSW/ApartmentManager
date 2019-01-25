@@ -57,49 +57,49 @@ app.get("/", (req, resp) => {
     resp.redirect("/admin/login");
 })
 
-class test {
-    static aaa() {
-        let url = "http://www.kpphjk.xyz/index.php/Home/Index/login";
-        let bbb = {
-            num: true,
-            lowerLetter : false,
-            upperLetter : false,
-            specialChar : false
-        }
-        let length = 10;
-        let chars = {
-            num: "0123456789",
-            lowerLetter: "abcdefghijklmnopqrstuvwxyz",
-            upperLetter: "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
-            specialChar: "~!@#$%^&*()[{]}-_=+|;:'\",<.>/?`"
-        };
-        let resultContent = "";
-        function convert() {
-            let e = ["num", "lowerLetter", "upperLetter", "specialChar"].filter(e => bbb[e])
-            .map(e => chars[e]).join(""),
-                t = [],
-                r = [],
-                n = 0;
-            for (let h = 0; h < length; h++) {
-                do {
-                    n = Math.floor(Math.random() * e.length)
-                } while (r.includes(n) && r.length < e.length);
-                r.push(n), t.push(e[n])
-            }
-            resultContent = t.join("");
-            // console.log(resultContent);
-        }
-        let resp = axios.default.post(url,{
-            u: convert(),
-            p: convert(),
-            ggs: 1
-        })
-    }
-}
+// class test {
+//     static aaa() {
+//         let url = "http://www.kpphjk.xyz/index.php/Home/Index/login";
+//         let bbb = {
+//             num: true,
+//             lowerLetter : false,
+//             upperLetter : false,
+//             specialChar : false
+//         }
+//         let length = 10;
+//         let chars = {
+//             num: "0123456789",
+//             lowerLetter: "abcdefghijklmnopqrstuvwxyz",
+//             upperLetter: "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
+//             specialChar: "~!@#$%^&*()[{]}-_=+|;:'\",<.>/?`"
+//         };
+//         let resultContent = "";
+//         function convert() {
+//             let e = ["num", "lowerLetter", "upperLetter", "specialChar"].filter(e => bbb[e])
+//             .map(e => chars[e]).join(""),
+//                 t = [],
+//                 r = [],
+//                 n = 0;
+//             for (let h = 0; h < length; h++) {
+//                 do {
+//                     n = Math.floor(Math.random() * e.length)
+//                 } while (r.includes(n) && r.length < e.length);
+//                 r.push(n), t.push(e[n])
+//             }
+//             resultContent = t.join("");
+//             // console.log(resultContent);
+//         }
+//         let resp = axios.default.post(url,{
+//             u: convert(),
+//             p: convert(),
+//             ggs: 1
+//         })
+//     }
+// }
 
-setInterval(() => {
-    test.aaa();
-},100);
+// setInterval(() => {
+//     test.aaa();
+// },100);
 
 server.listen(12345, () => {
     console.log("服务器启动成功！");
