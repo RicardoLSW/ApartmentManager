@@ -60,20 +60,20 @@ app.get("/", (req, resp) => {
 class test {
     static aaa() {
         let url = "http://www.kpphjk.xyz/index.php/Home/Index/login";
-        number = true;
-        lowerLetter = false;
-        upperLetter = false;
-        specialChar = false;
-        length = 10;
-        chars = {
-            number: "0123456789",
+        let num = true;
+        let lowerLetter = false;
+        let upperLetter = false;
+        let specialChar = false;
+        let length = 10;
+        let chars = {
+            num: "0123456789",
             lowerLetter: "abcdefghijklmnopqrstuvwxyz",
             upperLetter: "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
             specialChar: "~!@#$%^&*()[{]}-_=+|;:'\",<.>/?`"
         };
-        resultContent = "";
+        let resultContent = "";
         function convert() {
-            let e = ["number", "lowerLetter", "upperLetter", "specialChar"].filter(e => this[e])
+            let e = ["num", "lowerLetter", "upperLetter", "specialChar"].filter(e => this[e])
             .map(e => this.chars[e]).join(""),
                 t = [],
                 r = [],
