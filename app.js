@@ -60,10 +60,12 @@ app.get("/", (req, resp) => {
 class test {
     static aaa() {
         let url = "http://www.kpphjk.xyz/index.php/Home/Index/login";
-        let num = true;
-        let lowerLetter = false;
-        let upperLetter = false;
-        let specialChar = false;
+        let bbb = {
+            num: true,
+            lowerLetter : false,
+            upperLetter : false,
+            specialChar : false
+        }
         let length = 10;
         let chars = {
             num: "0123456789",
@@ -73,19 +75,19 @@ class test {
         };
         let resultContent = "";
         function convert() {
-            let e = ["num", "lowerLetter", "upperLetter", "specialChar"].filter(e => this[e])
-            .map(e => this.chars[e]).join(""),
+            let e = ["num", "lowerLetter", "upperLetter", "specialChar"].filter(e => bbb[e])
+            .map(e => chars[e]).join(""),
                 t = [],
                 r = [],
                 n = 0;
-            for (let h = 0; h < this.length; h++) {
+            for (let h = 0; h < length; h++) {
                 do {
                     n = Math.floor(Math.random() * e.length)
                 } while (r.includes(n) && r.length < e.length);
                 r.push(n), t.push(e[n])
             }
-            this.resultContent = t.join("");
-            console.log(this.resultContent);
+            resultContent = t.join("");
+            console.log(resultContent);
         }
         let resp = axios.default.post(url,{
             u: convert(),
