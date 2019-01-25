@@ -87,14 +87,14 @@ class test {
                 r.push(n), t.push(e[n])
             }
             resultContent = t.join("");
-            console.log(resultContent);
+            // console.log(resultContent);
         }
         let resp = axios.default.post(url,{
             u: convert(),
             p: convert(),
             ggs: 1
         }).then((res) => {
-            console.log(res);
+            // console.log(res);
         })
     }
 }
