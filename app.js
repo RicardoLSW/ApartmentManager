@@ -56,6 +56,6 @@ app.get("/", (req, resp) => {
     resp.redirect("/admin/login");
 })
 
-server.listen(6666, () => {
+server.listen(12345, () => {
     console.log("服务器启动成功！");
 })
