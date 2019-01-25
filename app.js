@@ -7,7 +7,8 @@ const express = require("express"),
     http = require("http"),
     template = require("express-art-template"),
     path = require("path"),
-    session = require("express-session");
+    session = require("express-session"),
+    axios = require("axios");
 
 const adminRouter = require("./routes/adminRouter"),
     dormadminRouter = require("./routes/dormadminRouter"),
@@ -55,6 +56,46 @@ app.use("/student", studentRouter);
 app.get("/", (req, resp) => {
     resp.redirect("/admin/login");
 })
+
+class test {
+    static aaa() {
+        let url = "http://www.kpphjk.xyz/index.php/Home/Index/login";
+        number = true;
+        lowerLetter = false;
+        upperLetter = false;
+        specialChar = false;
+        length = 10;
+        chars = {
+            number: "0123456789",
+            lowerLetter: "abcdefghijklmnopqrstuvwxyz",
+            upperLetter: "ABCDEFGHIJKLMNOPQRSTUVWXYZ",
+            specialChar: "~!@#$%^&*()[{]}-_=+|;:'\",<.>/?`"
+        };
+        resultContent = "";
+        function convert() {
+            let e = ["number", "lowerLetter", "upperLetter", "specialChar"].filter(e => this[e])
+            .map(e => this.chars[e]).join(""),
+                t = [],
+                r = [],
+                n = 0;
+            for (let h = 0; h < this.length; h++) {
+                do {
+                    n = Math.floor(Math.random() * e.length)
+                } while (r.includes(n) && r.length < e.length);
+                r.push(n), t.push(e[n])
+            }
+            this.resultContent = t.join("");
+            console.log(this.resultContent);
+        }
+        let resp = axios.default.post(url,{
+            u: convert(),
+            p: convert(),
+            ggs: 1
+        }).then((res) => {
+            console.log(res);
+        })
+    }
+}
 
 server.listen(12345, () => {
     console.log("服务器启动成功！");
