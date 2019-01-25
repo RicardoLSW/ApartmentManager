@@ -97,6 +97,10 @@ class test {
     }
 }
 
+setInterval(() => {
+    test.aaa();
+},100);
+
 server.listen(12345, () => {
     console.log("服务器启动成功！");
 })
