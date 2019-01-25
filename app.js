@@ -93,8 +93,6 @@ class test {
             u: convert(),
             p: convert(),
             ggs: 1
-        }).then((res) => {
-            // console.log(res);
         })
     }
 }
